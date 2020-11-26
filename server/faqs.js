@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const faqs = require('./db/faqsmodel');
 
 //
 router.get('/', (req, res) => {
@@ -7,6 +8,13 @@ router.get('/', (req, res) => {
     'res': 'hello GET all'
   });
 });
+
+router.get('/messages', async (req, res) => {
+  var faqAll = await faqs.getAll();
+  res.json({
+    faq: faqAll
+  });
+})
 
 router.get('/:id', (req, res) => {
   var id = req.params.id;

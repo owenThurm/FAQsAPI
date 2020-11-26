@@ -7,5 +7,5 @@ app.use('/faqs', faqs);
 
 app.listen(port, (err) => {
   if(err) console.log(err);
-  else console.log('App listening on port ' + port + '...');
+  else console.log(`App listening on port ${port}...`);
 });
