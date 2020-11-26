@@ -1,21 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const faqs = require('./db/faqsmodel');
+const questions = require('./db/faqsmodel');
 
-//
-router.get('/', (req, res) => {
+
+//GET ALL
+router.get('/', async (req, res) => {
+  var allfaqs = await questions.getAll();
   res.json({
-    'res': 'hello GET all'
+    faqs: allfaqs
   });
 });
 
-router.get('/messages', async (req, res) => {
-  var faqAll = await faqs.getAll();
-  res.json({
-    faq: faqAll
-  });
-})
-
+//GET ONE
 router.get('/:id', (req, res) => {
   var id = req.params.id;
   res.json({
@@ -23,12 +19,19 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+//CREATE ONE
+router.post('/', async (req, res) => {
+  var put = questions.insert({
+    username: 'magic',
+    title: 'hello world',
+    question: 'question'
+  });
   res.json({
-    'res': 'hello CREATE one'
+    'res': put
   });
 });
 
+//UPDATE ONE
 router.put('/:id', (req, res) => {
   var id = req.params.id;
   res.json({
@@ -36,6 +39,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
+//DELETE ONE
 router.delete('/:id', (req, res) => {
   var id = req.params.id;
   res.json({
